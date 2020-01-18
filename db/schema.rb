@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_18_062357) do
+ActiveRecord::Schema.define(version: 2020_01_18_070328) do
+
+  create_table "channels", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tv_shows", force: :cascade do |t|
+    t.integer "channel_id", null: false
+    t.string "name"
+    t.string "show_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["channel_id"], name: "index_tv_shows_on_channel_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -24,4 +39,16 @@ ActiveRecord::Schema.define(version: 2020_01_18_062357) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "users_favorite_tv_shows", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "tv_show_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tv_show_id"], name: "index_users_favorite_tv_shows_on_tv_show_id"
+    t.index ["user_id"], name: "index_users_favorite_tv_shows_on_user_id"
+  end
+
+  add_foreign_key "tv_shows", "channels"
+  add_foreign_key "users_favorite_tv_shows", "tv_shows"
+  add_foreign_key "users_favorite_tv_shows", "users"
 end
