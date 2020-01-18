@@ -1,0 +1,16 @@
+<tr>
+  <td>
+    <%= tv_show.name %>
+    <span class="channel_tag">
+      <%= tv_show.channel_name %>
+    </span>
+  </td>
+
+  <td>
+    <% if tv_show.favorite_for?(current_user) %>
+      <span>It's youor favorite!</sapn>
+    <% else %>
+      <%= link_to "Make favorite", make_favorite_tv_show_path(tv_show) %>
+    <% end %>
+  </td>
+</tr>
